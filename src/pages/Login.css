@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ─── Reset & Base ─────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:         #0b0d17;
+  --surface:    rgba(255, 255, 255, 0.04);
+  --border:     rgba(255, 255, 255, 0.09);
+  --accent:     #c8a96e;
+  --accent-glow:rgba(200, 169, 110, 0.25);
+  --text:       #f0ece4;
+  --muted:      rgba(240, 236, 228, 0.45);
+  --input-bg:   rgba(255, 255, 255, 0.055);
+  --input-focus:rgba(200, 169, 110, 0.15);
+  --radius:     14px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Layout ───────────────────────────────────── */
+body {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Animated Background Blobs ───────────────── */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.28;
+  animation: drift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.blob-1 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, #c8a96e, transparent 70%);
+  top: -120px; left: -100px;
+  animation-delay: 0s;
+}
+
+.blob-2 {
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, #6e8dc8, transparent 70%);
+  bottom: -80px; right: -60px;
+  animation-delay: -4s;
+}
+
+.blob-3 {
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, #a96ec8, transparent 70%);
+  top: 50%; left: 60%;
+  animation-delay: -8s;
+}
+
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 20px) scale(1.08); }
+}
+
+/* ─── Card ─────────────────────────────────────── */
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 44px 40px 36px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 32px 64px rgba(0,0,0,0.5),
+    0 0 60px var(--accent-glow);
+  animation: card-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Logo Mark ────────────────────────────────── */
+.logo-mark {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--accent), #e8c98e);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 20px var(--accent-glow);
+  animation: card-in 0.7s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.logo-icon {
+  font-size: 22px;
+  color: #0b0d17;
+  line-height: 1;
+}
+
+/* ─── Card Header ───────────────────────────────── */
+.card-header {
+  margin-bottom: 32px;
+  animation: card-in 0.7s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.card-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+}
+
+.card-header p {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: 0.2px;
+}
+
+/* ─── Form ──────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: card-in 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Field Groups ──────────────────────────────── */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field-group label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* ─── Input Wrapper ─────────────────────────────── */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: color var(--transition);
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: var(--accent);
+}
+
+input {
+  width: 100%;
+  padding: 13px 16px 13px 42px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 400;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(240, 236, 228, 0.22);
+}
+
+input:focus {
+  border-color: var(--accent);
+  background: var(--input-focus);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ─── Submit Button ─────────────────────────────── */
+.submit-btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #c8a96e 0%, #e8c98e 50%, #c8a96e 100%);
+  background-size: 200% auto;
+  border: none;
+  border-radius: var(--radius);
+  color: #0b0d17;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition:
+    background-position var(--transition),
+    box-shadow var(--transition),
+    transform 0.15s ease;
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.submit-btn:hover {
+  background-position: right center;
+  box-shadow: 0 6px 28px rgba(200, 169, 110, 0.4);
+  transform: translateY(-1px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+
+.btn-arrow {
+  font-size: 18px;
+  transition: transform var(--transition);
+}
+
+.submit-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ─── Footer Note ───────────────────────────────── */
+.footer-note {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer-note a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity var(--transition);
+}
+
+.footer-note a:hover {
+  opacity: 0.75;
+}
